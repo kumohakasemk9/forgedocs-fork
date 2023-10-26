@@ -17,6 +17,9 @@ From Zero to Modding
 5. Choose your IDE: Forge explicitly supports developing with Eclipse or IntelliJ environments, but any environment, from Netbeans to vi/emacs, can be made to work.
     * For Eclipse, you should run `gradlew eclipse` - this will download some more artifacts for building eclipse projects and then place the eclipse project artifacts in your current directory.
     * For IntelliJ, simply import the build.gradle file.
+!!! note
+    In `forge-1.12.2-14.23.5.2860-mdk`, it looks like `setupDecompWorkspace` task is deleted. If you want to use cli for
+    building, please do `eclipse` task only.
 6. Load your project into your IDE.
     * For Eclipse, create a workspace anywhere (though the easiest location is one level above your project folder). Then simply import your project folder as a project, everything will be done automatically.
     * For IntelliJ, you only need to create run configs. You can run `gradlew genIntellijRuns` to do this.
@@ -75,10 +78,14 @@ These customizations are highly recommended for all projects.
 Building and Testing Your Mod
 -----------------------------
 
+
 1. To build your mod, run `gradlew build`. This will output a file in `build/libs` with the name `[archivesBaseName]-[version].jar`. This file can be placed in the `mods` folder of a forge enabled Minecraft setup, and distributed.
 2. To test run with your mod, the easiest way is to use the run configs that were generated when you set up your project. Otherwise, you can run `gradlew runClient`. This will launch Minecraft from the `<runDir>` location, including your mod code. There are various customizations to this command. Consult the [ForgeGradle cookbook][] for more information.
-3. You can also run a dedicated server using the server run config, or `gradlew runServer`. This will launch the Minecraft server with its GUI.
+ 
+4. You can also run a dedicated server using the server run config, or `gradlew runServer`. This will launch the Minecraft server with its GUI.
 
 !!! note
-
-    It is always advisable to test your mod in a dedicated server environment if it is intended to run there.
+    * In `forge-1.12.2-14.23.5.2860-mdk`, `runClient` task looks like ignoring all resource included in `src/main/resources/` dir
+      this makes your mcmod.info missing in game, no lang files and you may see raw names, etc... (BUG?)
+      
+    * It is always advisable to test your mod in a dedicated server environment if it is intended to run there.
